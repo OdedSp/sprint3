@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 import HomePage from './pages/HomePage.js'
 import MyNotes from './pages/MyNotes.js'
 import MyMail from './pages/MyMail.js'
-import MyPlaces from './pages/MyPlaces.js'
+// import MyPlaces from './pages/MyPlaces.js'
 import InboxMsg from './pages/InboxMsg.js'
+import PlaceMgMt from './pages/PlaceMgmt.js'
 
 const routes = [
     {
@@ -20,22 +20,12 @@ const routes = [
     },
     {
         path: '/places',
-        component: MyPlaces
+        component: PlaceMgMt
     },
     {
         path: '/inbox/:msgId',
         component: InboxMsg
     },
-=======
-import PlaceMgMt from './pages/PlaceMgmt.js'
-
-const routes = [
-    {
-        path: '/Place-Mangment',
-        component : PlaceMgMt
-    },
-
->>>>>>> 65577baa0cfdea620972f6d9a1d7181a5ee961d4
 ];
 
 export default routes;
