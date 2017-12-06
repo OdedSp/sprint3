@@ -5,7 +5,7 @@ import PlaceCmp from '../cmps/PlaceCmp.js'
 export default {
     template: `
         <section>
-        <h1> place Mgmt</h1>
+        <h1> place Mgmt-new branch</h1>
         <google-map></google-map>
             <place-cmp :myPlaces="places">
             </place-cmp>
