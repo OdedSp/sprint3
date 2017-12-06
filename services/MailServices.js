@@ -7,7 +7,7 @@ var msgsToMe = [
         text: 'Just kidding',
         isRead: true,
         important: false,
-        receivedOn: Date.now()
+        receivedOn: moment([2017, 11, 6]).fromNow()
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ var msgsToMe = [
         text: 'Just kidding',
         isRead: false,
         important: true,
-        receivedOn: Date.now()
+        receivedOn: moment([2017, 11, 5]).fromNow()
     },
     {
         id: 3,
@@ -27,7 +27,7 @@ var msgsToMe = [
         text: 'Just kidding',
         isRead: false,
         important: false,
-        receivedOn: Date.now()
+        receivedOn: moment([2017, 9, 6]).fromNow()
     }
 ]
 
@@ -40,7 +40,7 @@ var sentMsgs = [
         text: 'and fuck outta here',
         isSent: true,
         important: false,
-        sentOn: Date.now()
+        sentOn: moment([2001, 8, 11]).fromNow()
     },
     {
         id: 2,
@@ -50,7 +50,7 @@ var sentMsgs = [
         text: 'bla bla bla',
         isSent: true,
         important: true,
-        sentOn: Date.now()
+        sentOn: moment([1990, 10, 1]).fromNow()
     },
 ]
 
@@ -63,7 +63,7 @@ var drafts = [
         text: 'your opinion requested',
         isSent: false,
         important: true,
-        sentOn: Date.now()
+        sentOn: null
     },
     {
         id: 2,
@@ -73,7 +73,7 @@ var drafts = [
         text: 'tagadagadaga dum dum, taga dum dum, tagadaga dum dum',
         isSent: false,
         important: true,
-        sentOn: Date.now()
+        sentOn: null
     },
 ]
 
@@ -93,7 +93,7 @@ function _findNextId(arr) {
 function sendMsg (msgObj) {
     msgObj.id = _findNextId(sentMsgs)
     msgObj.isSent = true;
-    msgObj.sentOn = Date.now();
+    msgObj.sentOn = moment(Date.now()).fromNow();
     sentMsgs.push(msgObj)
 }
 
@@ -110,6 +110,24 @@ function getMsgById(msgId, msgs) {
     })
 }
 
+function deleteMsg(msgId, msgs) {
+    return new Promise((resolve, reject)=>{
+        var msgIdx = msgs.findIndex(msg => msg.id === msgId)
+        msgs.splice(msgIdx, 1);
+        resolve()
+    });
+}
+
+function changeReadStatus(msgId, status) {
+    var msg = getMsgById(msgId,msgsToMe);
+    var msgIdx = msgsToMe.findIndex(msg => msg.id === msgId)
+    // console.log(msgIdx)
+    // console.log(msgsToMe[msgIdx].isRead);
+    // console.log(status)
+    msgsToMe[msgIdx].isRead = status
+    // console.log(msgsToMe[msgIdx].isRead);
+}
+
 export default {
     getMsgs,
     sendMsg,
@@ -117,5 +135,7 @@ export default {
     msgsToMe,
     drafts,
     sentMsgs,
-    getMsgById
+    getMsgById,
+    changeReadStatus,
+    deleteMsg
 }
