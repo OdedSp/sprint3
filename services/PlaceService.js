@@ -70,7 +70,7 @@ function savePlace(place) {
     return new Promise((resolve, reject)=>{
         if (place.placeId) {
             var placeToUpdateIdx = places.findIndex(currPlace => currPlace.placeId === place.placeId)
-            place.splice(placeToUpdateIdx, 1, place);
+            places.splice(placeToUpdateIdx, 1, place);
         }  else {
             place.placeId = _getNextId();
             places.push(place);

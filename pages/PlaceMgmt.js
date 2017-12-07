@@ -8,8 +8,9 @@ import AddPlaceModal from '../cmps/AddPlaceModal.js'
 export default {
     template: `
         <section> 
+        {{placeSearchedMap}}
         <h1> place Mgmt-new branch</h1>
-        <map-feature-cmp  @geoFindMe="geoFindMe"
+        <map-feature-cmp  @geoFindMe="geoFindMe" 
          @searchPlace="getGeoByAddress">
         </map-feature-cmp>
         <button @click="addingPlace = !addingPlace" v-if="placeSearchedMap">save to my places</button>
@@ -36,29 +37,36 @@ export default {
         PlaceService.getPlaces()
             .then(places => this.places = places)
     },
-    computed :{
+    computed: {
     },
-    components:{
+    components: {
         GoogleMap,
         PlaceCmp,
         MapFeatureCmp,
         AddPlaceModal
     },
-    methods:{
-        geoFindMe(){
+    methods: {
+        geoFindMe() {
             MapService.geoFindMe()
+            .then(newPosition => {
+                console.log('newPosition',newPosition)
+                MapService.getGeoByCords(newPosition)
+                    .then(newPlace => {
+                        console.log('1111', newPlace);
+                        this.placeSearchedMap = Object.assign({}, newPlace)
+                })
+            })       
         },
-        removePlace(placeId){
+        removePlace(placeId) {
             PlaceService.removePlace(placeId)
         },
-        getGeoByAddress(searchInput){
+        getGeoByAddress(searchInput) {
             MapService.getGeoByAddress(searchInput)
-            .then(placeSearchedMap => {
-                this.placeSearchedMap =   Object.assign({}, placeSearchedMap)
-                // console.log('get place from servie', this.placeSearchedMap);
-            })
+                .then(placeSearchedMap => {
+                    this.placeSearchedMap = Object.assign({}, placeSearchedMap)
+                })
         },
-        addNewPlace(newPlace){
+        addNewPlace(newPlace) {
             PlaceService.savePlace(newPlace)
         }
     },

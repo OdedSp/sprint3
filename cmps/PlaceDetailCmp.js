@@ -17,6 +17,7 @@ export default {
         },
         updatePlace(){
             this.$emit('updatePlace', this.currPlace);
+            this.isEdit = !this.isEdit
         }
     },
     data(){
