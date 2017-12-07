@@ -6,6 +6,7 @@ import SentMsg from './cmps/SentMsg.js'
 import EditDraft from './cmps/EditDraft.js'
 import PlaceMgMt from './pages/PlaceMgmt.js'
 import PlaceDetail from './pages/PlaceDetail.js'
+import NoteDetail from './pages/NoteDetail.js'
 
 const routes = [
     {
@@ -33,12 +34,16 @@ const routes = [
         component: PlaceDetail
     },
     {
-       path: '/sent/:msgId',
+        path: '/sent/:msgId',
         component: SentMsg
     },
     {
         path: '/drafts/:msgId',
         component: EditDraft
+    },
+    {
+        path: '/note/:noteId',
+        component: NoteDetail
     },
 ];
 

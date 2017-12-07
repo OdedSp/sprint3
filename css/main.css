@@ -2,4 +2,8 @@
 
 @import '_mail.css';
 @import './_map.css';
-@import './editing.css';
+@import './_editing.css';
+
+textarea{
+    border: 1px rgb(221, 221, 221) solid
+}
