@@ -1,9 +1,9 @@
 import HomePage from './pages/HomePage.js'
 import MyNotes from './pages/MyNotes.js'
 import MyMail from './pages/MyMail.js'
-// import MyPlaces from './pages/MyPlaces.js'
 import InboxMsg from './pages/InboxMsg.js'
 import PlaceMgMt from './pages/PlaceMgmt.js'
+import PlaceDetail from './pages/PlaceDetail.js'
 
 const routes = [
     {
@@ -26,6 +26,10 @@ const routes = [
         path: '/inbox/:msgId',
         component: InboxMsg
     },
+    {
+        path: '/places/:placeId',
+        component: PlaceDetail
+    }
 ];
 
 export default routes;

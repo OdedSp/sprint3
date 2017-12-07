@@ -7,6 +7,7 @@ export default {
         {{ place.desc }}
         {{ place.lat }}   |      {{ place.lng }} 
         <button @click="del(place.placeId)">Del</button>
+        <router-link :to="'/places/' +  place.placeId" tag="button">More Info</router-link>
             </li>
         </ul>
     </div>
