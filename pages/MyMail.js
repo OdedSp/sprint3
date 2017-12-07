@@ -17,9 +17,6 @@ export default {
         </aside>
         
         <my-inbox :msgs="msgs" @msgCliked="routeToMsg" v-show="show='inbox'"></my-inbox>
-        <my-sent v-show="show='sent'></my-sent>
-        <my-drafts v-show="show='drafts'></my-drafts>
-        <compose-msg v-if="compose" v-show="show='compose'></compose-msg>
         <button @click="compose=!compose">🖉</button>
     </section>
     `,
