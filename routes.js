@@ -1,7 +1,9 @@
 import HomePage from './pages/HomePage.js'
 import MyNotes from './pages/MyNotes.js'
 import MyMail from './pages/MyMail.js'
-import InboxMsg from './pages/InboxMsg.js'
+import InboxMsg from './cmps/InboxMsg.js'
+import SentMsg from './cmps/SentMsg.js'
+import EditDraft from './cmps/EditDraft.js'
 import PlaceMgMt from './pages/PlaceMgmt.js'
 import PlaceDetail from './pages/PlaceDetail.js'
 
@@ -29,7 +31,15 @@ const routes = [
     {
         path: '/places/:placeId',
         component: PlaceDetail
-    }
+    },
+    {
+       path: '/sent/:msgId',
+        component: SentMsg
+    },
+    {
+        path: '/drafts/:msgId',
+        component: EditDraft
+    },
 ];
 
 export default routes;

@@ -4,8 +4,11 @@ export default {
     template: `
     <div class="inbox">
         <ul>
-            <li v-for="msg in msgs" @click="routeToMsg(msg.id)">
-                <span v-if="msg.important">🔖</span>To: {{msg.to}} - {{msg.title}}
+            <li v-for="msg in msgs">
+            <div @click="routeToMsg(msg.id)">
+                <span v-if="msg.important">➲</span>To: {{msg.to}} - {{msg.title}}
+                </div>
+                <button @click="deleteMsg(msg.id)">🗑</button>
             </li>
         </ul>
     </div>
@@ -27,6 +30,9 @@ export default {
     methods: {
         routeToMsg(msgId) {
             this.$router.push('/sent/'+msgId)
+        },
+        deleteMsg(msgId){
+            MailServices.deleteMsg(msgId, MailServices.sentMsgs)
         }
     }
 }

@@ -7,7 +7,7 @@ export default {
         <input type="text" placeholder="Title" v-model="blankMsg.title" required>
         <input type="checkbox" id="important" v-model="blankMsg.important"><label for="important">Important?</label>
         <textarea cols="30" rows="10" placeholder="Type your message" v-model="blankMsg.text"></textarea>
-        <button @click="saveDraft">💾</button><button @click="sendMsg">➲</button>
+        <button @click="saveDraft">💾</button><button @click="sendMsg">🖅</button>
     </section>
     `,
     data () {
