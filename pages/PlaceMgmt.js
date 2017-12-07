@@ -21,7 +21,9 @@ export default {
         </section>
         `,
     components: {
-
+        MapFeatureCmp,
+        AddPlaceModal,
+        PlaceCmp
     },
     data() {
         return {

@@ -1,0 +1,14 @@
+.place-detail input, textarea{
+    border: none;
+    background: inherit;
+    color: inherit;
+}
+
+.editing textarea{
+    border: 1px dashed rgb(148, 211, 0);
+    color: rgb(39, 39, 39);
+}
+.editing input{
+    border: 1px dashed rgb(148, 211, 0);
+    color: rgb(39, 39, 39);
+}

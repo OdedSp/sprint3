@@ -1,5 +1,19 @@
-var places = [{},{}];
-
+var places = [{desc : 'lorem ipsum bla bla',
+name:'London',
+    lat : 37.4224764,
+    lng : -122.0842499,
+    placeId : 1,
+    tags : ['israel', 'sky'],
+    },
+    {
+        name:'naaman',
+   desc : 'lorem ipsum bla bla',
+    lat : 37.4224764,
+    lng : -122.0842499,
+    placeId : 3,
+    tags : ['israel', 'sky'],
+    }
+];
 
 function genratePlace() {
     return {
@@ -21,24 +35,23 @@ function _getNextId(){
 }
 
 function getPlaceById(placeId) {
+    if (places.length === 0) {
+        genratePlaces()
+    } 
+        
     return new Promise((resolve, reject)=>{
         var findedPlace = places.find(place => place.placeId === placeId)
-        if (findedPlace) resolve(findedPlace)
-        else reject();
-    })   
-}
-function genratePlaces() {
-    places.forEach((place,idx) => {
-        place.name = 'Lorem',
-        place.desc = 'lorem ipsum bla bla',
-        place.lat = 37.4224764+idx,
-        place.lng = -122.0842499*idx
-        place.placeId = _getNextId()
-    } )
+        if (findedPlace) {
+            resolve(findedPlace)
+        } else {
+            reject('no place with this id')
+        }             
+    })    
 }
 
+
+
 function getPlaces() {
-    genratePlaces()
     return new Promise((resolve, reject) => {
         setTimeout(() => { resolve(places) }, 500)
     });
@@ -56,7 +69,7 @@ function savePlace(place) {
     console.log('adding place', place);
     return new Promise((resolve, reject)=>{
         if (place.placeId) {
-            var placeToUpdateIdx = places.findIndex(currPlace => currPlace .placeId === place.placeId)
+            var placeToUpdateIdx = places.findIndex(currPlace => currPlace.placeId === place.placeId)
             place.splice(placeToUpdateIdx, 1, place);
         }  else {
             place.placeId = _getNextId();
@@ -72,5 +85,6 @@ export default{
     getPlaces,
     genratePlace,
     removePlace,
-    savePlace
+    savePlace,
+    getPlaceById
 }

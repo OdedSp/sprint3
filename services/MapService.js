@@ -2,13 +2,15 @@ const GOOGLE_KEY = 'AIzaSyCkW09cs2RDYMvyqpJBkZVQGkHjBi3R3VA';
 var currCords = {lat: -25.363, lng: 131.044};
 var placeSearchedMap ={}
 
-function initMap(zoom) {
+function initMap(zoom,cords) {
+    var cords = cords || currCords
+    console.log('',cords);
        var map = new google.maps.Map(document.getElementById('map'), {
            zoom: zoom || 4,
-           center: currCords
+           center: cords
        });
        var marker = new google.maps.Marker({
-           position: currCords,
+           position: cords,
            map: map
        });
    }
