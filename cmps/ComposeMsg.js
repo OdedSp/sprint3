@@ -13,7 +13,7 @@ export default {
     data () {
         return {
             blankMsg: {
-                id: null,
+                id: undefined,
                 from: 'me',
                 to: null,
                 title: null,
@@ -26,9 +26,13 @@ export default {
     },
     methods: {
         sendMsg (){
+            this.$emit('msgSent')
             MailServices.sendMsg(this.blankMsg)
+            if (this.blankMsg.to==='me') {
+                this.$router.push(`/mail/inbox/`)
+            } else this.$router.push(`/mail/sent/`)
             this.blankMsg = {
-                id: null,
+                id: undefined,
                 from: 'me',
                 to: null,
                 title: null,
@@ -37,12 +41,11 @@ export default {
                 important: false,
                 sentOn: null
             }
-            console.log(MailServices.sentMsgs)
         },
         saveDraft (){
             MailServices.saveDraft(this.blankMsg)
             this.blankMsg = {
-                id: null,
+                id: undefined,
                 from: 'me',
                 to: null,
                 title: null,

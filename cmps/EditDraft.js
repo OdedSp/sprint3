@@ -28,17 +28,17 @@ export default {
             MailServices.deleteMsg(this.msg.id, MailServices.drafts)
             MailServices.saveDraft(this.msg)
             //Needs to move to drafts and not to Mail
-            this.$router.push('/mail')
+            this.$router.push('/drafts')
         },
         sendMsg (){
             MailServices.deleteMsg(this.msg.id, MailServices.drafts)
             MailServices.sendMsg(this.msg)
             //Needs to move to sent and not to Mail
-            this.$router.push('/mail')
+            this.$router.push('/sent')
         },
         deleteMsg(){
             MailServices.deleteMsg(this.msg.id, MailServices.drafts)
-            this.$router.push('/mail')
+            this.$router.push('/inbox')
         }
     }
 }

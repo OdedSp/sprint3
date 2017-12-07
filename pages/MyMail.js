@@ -1,54 +1,73 @@
 import MailServices from '../services/MailServices.js';
 
-
-import MyInbox from '../cmps/MyInbox.js';
-import MyDrafts from '../cmps/MyDrafts.js';
-import MySent from '../cmps/MySent.js';
+import MsgBox from '../cmps/MsgBox.js';
 import ComposeMsg from '../cmps/ComposeMsg.js';
-// import ListMsgs from '../cmps/ListMsgs.js';
+import ShowMsg from '../cmps/ShowMsg.js';
 
 export default {
-    template:`
+    template: `
     <section>
         <aside>
-            Inbox
-            Sent Mail
-            Drafts
+            <p @click="folderClicked('inbox')">Inbox</p>
+            <p @click="folderClicked('sent')">Sent Mail</p>
+            <p @click="folderClicked('drafts')">Drafts</p>
         </aside>
         
-        <my-inbox :msgs="msgs" @msgCliked="routeToMsg" v-show="show='inbox'"></my-inbox>
-        <button @click="compose=!compose">🖉</button>
+        <input type="text" v-model="searchTerm">
+        <msg-box :msgs="msgs" :show="show" @msgCliked="routeToMsg" @deleteMsg="deleteMsg"></msg-box>
+        <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg"></show-msg>
+        <compose-msg v-show="compose"></compose-msg>
+        <button @click="compose=!compose" @msgSent="compose=false">🖉</button>
     </section>
     `,
     data() {
         return {
             compose: false,
             msgs: [],
-            show: 'inbox'
+            show: 'inbox',
+            searchTerm: '',
+            selectedMsg: null
         }
     },
-    created(){
-        MailServices.getMsgs(MailServices.msgsToMe)
-        .then(msgs => {
-            this.msgs = msgs
-        })
-        .catch(err => {
-            console.log(err)
-            this.msgs = []
-        })
-        console.log(MailServices.allMsgs);
+    created() {
+        MailServices.getMsgs()
+            .then(res => {
+                this.msgs = res
+            })
+            .catch(err => {
+                console.log(err)
+                this.msgs = []
+            })
+        if (this.$route.params.folder === null) {
+            this.show = 'inbox'
+        } else this.show = this.$route.params.folder
     },
     methods: {
-        routeToMsg(id){
-            this.$router.push('/inbox/'+id)
+        routeToMsg(id) {
+            MailServices.getMsgById(id)
+                .then(msg => this.selectedMsg = msg)
+                .then (this.$router.push(`/mail/message/` + id))
+                .catch(err => {
+                    console.log('something happened')
+                })
             MailServices.changeReadStatus(id, true)
         },
+        deleteMsg(id) {
+            MailServices.deleteMsg(id)
+        },
+        changeView(folder) {
+            this.show = folder
+        },
+        folderClicked(folder) {
+            console.log(folder);
+            this.$router.push(`/mail/` + folder)
+            this.changeView(folder)
+        }
     },
     components: {
-        MyInbox,
-        MyDrafts,
         ComposeMsg,
-        MySent,
-        // ListMsgs
+        ShowMsg,
+        // ListMsgs,
+        MsgBox
     }
 }
