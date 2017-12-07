@@ -5,8 +5,10 @@ var msgsToMe = [
         to: 'me',
         title: 'I hate Avinoam',
         text: 'Just kidding',
+        isSent: true,
         isRead: true,
         important: false,
+        sentOn: null,
         receivedOn: moment([2017, 11, 6]).fromNow()
     },
     {
@@ -15,8 +17,10 @@ var msgsToMe = [
         to: 'me',
         title: 'Kill all Jews',
         text: 'Just kidding',
+        isSent: true,
         isRead: false,
         important: true,
+        sentOn: null,
         receivedOn: moment([2017, 11, 5]).fromNow()
     },
     {
@@ -25,8 +29,10 @@ var msgsToMe = [
         to: 'me',
         title: 'I hate sandwiches',
         text: 'Just kidding',
+        isSent: true,
         isRead: false,
         important: false,
+        sentOn: null,
         receivedOn: moment([2017, 9, 6]).fromNow()
     }
 ]
@@ -39,8 +45,10 @@ var sentMsgs = [
         title: 'Let\'s make like a grandma',
         text: 'and fuck outta here',
         isSent: true,
+        isRead: true,
         important: false,
-        sentOn: moment([2001, 8, 11]).fromNow()
+        sentOn: moment([2001, 8, 11]).fromNow(),
+        receivedOn: null
     },
     {
         id: 2,
@@ -50,7 +58,8 @@ var sentMsgs = [
         text: 'bla bla bla',
         isSent: true,
         important: true,
-        sentOn: moment([1990, 10, 1]).fromNow()
+        sentOn: moment([1990, 10, 1]).fromNow(),
+        receivedOn: null
     },
 ]
 
@@ -62,8 +71,10 @@ var drafts = [
         title: 'CRUDL',
         text: 'your opinion requested',
         isSent: false,
+        isRead: true,
         important: true,
-        sentOn: null
+        sentOn: null,
+        receivedOn: null
     },
     {
         id: 2,
@@ -72,10 +83,17 @@ var drafts = [
         title: 'Smooth criminal',
         text: 'tagadagadaga dum dum, taga dum dum, tagadaga dum dum',
         isSent: false,
+        isRead: true,
         important: true,
-        sentOn: null
+        sentOn: null,
+        receivedOn: null
     },
 ]
+
+var allMsgs = msgsToMe.concat(sentMsgs)
+allMsgs = allMsgs.concat(drafts)
+    
+
 
 function getMsgs(msgs) {
     return new Promise((resolve, reject)=>{
@@ -95,6 +113,9 @@ function sendMsg (msgObj) {
     msgObj.isSent = true;
     msgObj.sentOn = moment(Date.now()).fromNow();
     sentMsgs.push(msgObj)
+    if (msgObj.to==='me') {
+        
+    }
 }
 
 function saveDraft (msgObj) {
@@ -137,5 +158,6 @@ export default {
     sentMsgs,
     getMsgById,
     changeReadStatus,
-    deleteMsg
+    deleteMsg,
+    allMsgs
 }
