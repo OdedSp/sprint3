@@ -18,8 +18,10 @@ export default {
         }
     },
     created() {
-        NoteService.getNoteById(+this.$route.params.placeId)
-        .then (note => this.noteToDisplay = note )
+        NoteService.getNoteById(+this.$route.params.noteId)
+        .then (note => {
+            // console.log({note})
+            this.noteToDisplay = note} )
     },
     methods:{
         updateNote(noteUpdated){

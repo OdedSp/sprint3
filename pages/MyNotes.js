@@ -5,10 +5,9 @@ import AddNoteModal from '../cmps/AddNoteModal.js'
 export default {
     template: `
             <section>
-            <h2> Mister Keeper HomePage </h2>
-            <button @click="addNoteModal = !addNoteModal">Add Your Note</button>
-                <add-note-modal v-if="addNoteModal" @addNewNote="addNote"></add-note-modal>
-                <note-cmp v-for="note in notes" :noteToRender="note" @noteTodelete="delNote"></note-cmp>
+            <button @click="isModal" class="button is-primary">Add a New Note</button>
+                <add-note-modal v-if="addNoteModal" @addNewNote="addNote" @closeModal="isModal"></add-note-modal>
+                <note-cmp :notesToRender="notes" @noteTodelete="delNote"></note-cmp>
             </section>
         
         `,
@@ -22,15 +21,20 @@ export default {
     created() {
         NoteService.getNotes()
             .then(notes => this.notes = notes)
-
     },
     methods: {
         delNote(noteId) {
             NoteService.delNote(noteId)
         },
         addNote(newNote) {
+            console.log('adding',newNote);
+        
             NoteService.addNote(newNote)
-                .then(this.addNoteModal = !this.addNoteModal)
+                .then(note => this.addNoteModal = !this.addNoteModal)
+                .catch(err => console.log(err))
+        },
+        isModal(){
+            this.addNoteModal = !this.addNoteModal
         }
     },
     computed: {

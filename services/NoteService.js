@@ -1,21 +1,12 @@
 var notes = [
     {
         noteId: 101,
-        title: 'my first note',
-        text: 'weelcome to Naaman Keeper weelcome to Naaman Keeper weelcome to Naaman Keeper weelcome to Naaman Keeper',
+        title: 'this is my first note',
+        text: 'welcome to Naaman and Oded notes Keeper, fill free to add, remove, list, show and make up more shortcuts like CRUDL',
         imgUrl: null,
         color: 'red',
         priority: 5,
-        date: Date.now()
-    },
-    {
-        noteId: 102,
-        title: 'my 2nd note',
-        text:  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.' , 
-        imgUrl: '../img/dontForget.jpg',
-        color: 'red',
-        priority: 5,
-        date: Date.now()
+        date :new Date()
     },
 ]
 function _getNextId() {
@@ -40,20 +31,17 @@ function delNote(noteId) {
 
 function addNote(newNote) {
     return   new Promise((resolve, reject) => {
-        if (newNote.title) {
             newNote.noteId = _getNextId()
-            // newNote.date = Date.Now()
+            newNote.date = new Date()
+            newNote.priority = +newNote.priority
             notes.push(newNote)
-            resolve()
-        } else {
-           reject('pls add title')
-        }
+            resolve(newNote)
     })
 
 }
 function getNoteById(noteId) {
     return new Promise((resolve, reject) => {
-        setTimeout(() => { resolve(notes.find(note => note.noteId === noteId)) }, 1000)
+        setTimeout(() => { resolve(notes.find(note => note.noteId === noteId)) }, 100)
     });
 }
 function updateNote(noteUpdated) {
