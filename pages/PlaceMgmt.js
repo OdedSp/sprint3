@@ -7,18 +7,18 @@ import AddPlaceModal from '../cmps/AddPlaceModal.js'
 
 export default {
     template: `
-        <section> 
-        {{placeSearchedMap}}
-        <h1> place Mgmt-new branch</h1>
+        <section class="wraper"> 
+        <div class="my-place card">
+        <place-cmp :myPlaces="places" @delPlace="removePlace">
+        </place-cmp>
         <map-feature-cmp  @geoFindMe="geoFindMe" 
          @searchPlace="getGeoByAddress">
         </map-feature-cmp>
-        <button @click="addingPlace = !addingPlace" v-if="placeSearchedMap">save to my places</button>
-        <add-place-modal v-if="addingPlace" :placeToAdd="placeSearchedMap" @addPlace="addNewPlace"></add-place-modal>
-        <google-map></google-map>
-            <place-cmp :myPlaces="places" @delPlace="removePlace">
-            </place-cmp>
-            
+        <button @click="addingPlaceModal" v-if="placeSearchedMap" class="button is-primary save-place">save to my places</button>
+        <add-place-modal v-if="addingPlace" :placeToAdd="placeSearchedMap" @addPlace="addNewPlace" @closeModal="addingPlaceModal"></add-place-modal>
+        <google-map class="card-image"></google-map>
+
+        </div> 
         </section>
         `,
     components: {
@@ -46,6 +46,9 @@ export default {
         AddPlaceModal
     },
     methods: {
+        addingPlaceModal(){
+            this.addingPlace = !this.addingPlace
+        },
         geoFindMe() {
             MapService.geoFindMe()
             .then(newPosition => {
@@ -68,6 +71,7 @@ export default {
         },
         addNewPlace(newPlace) {
             PlaceService.savePlace(newPlace)
+            this.addingPlace = false
         }
     },
     mounted: function () {

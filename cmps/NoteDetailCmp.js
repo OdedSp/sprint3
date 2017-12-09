@@ -1,13 +1,13 @@
 export default {
     template: `
-    <section class="note-detail"  :class="{editing: !isEdit}">
-        <span @click="setEditMode" v-if="isEdit"> edit {{note.noteId}} note</span>
-        <span @click="setEditMode" v-else> done edit</span>
-   <div> <h3><input type="text" v-model="note.title" :disabled="isEdit">{{note.date}}</h3></div>
-    <hr>
-    <textarea v-model="note.text" rows="5" cols="40" :disabled="isEdit"></textarea>
-    <p>priority:<input type="number" v-model="note.priority" :disabled="isEdit"></p>
+    <section class="note-detail content"  :class="{editing: !isEdit}">
+    <span class="modal-card-head">Note {{note.noteId}}</span>
+        <h1><input type="text" v-model="note.title" :disabled="isEdit"><time>{{note.date}}</time></h1>
+    <p><textarea v-model="note.text" rows="5" cols="40" :disabled="isEdit"></textarea></p>
+    <p><span v-for="priorit in note.priority">🎌</span></p>
     <img :src="note.imgUrl">
+    <span @click="setEditMode" v-if="isEdit" class="button is-primary is-outlined"> edit {{note.noteId}} note</span>
+    <span @click="setEditMode" class="button is-primary is-danger" v-else> done edit</span>
     </section>
     `,
     props: ['note'],

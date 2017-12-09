@@ -1,7 +1,6 @@
 export default {
     template: `
     <section class="add-note modal is-active" >
-    <button class="delete" aria-label="close"></button>
 <div class="modal-background"  @click="close"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -15,17 +14,20 @@ export default {
             red</label>
             <label><input type="radio" value="blue" v-model="newNote.color">
             blue</label>
-            priority: <select v-model="newNote.priority" form="add-note-form" class="select">
+        <p>            priority: <select v-model="newNote.priority" form="add-note-form" class="select">
             <option value=1>very low</option>
             <option value=2>low</option>
             <option value=3>o.k</option>
             <option value=4>high</option>
             <option value=5>very high</option>
-          </select>    
+          </select>  </p>
         </section>
+
+
+        
         <footer class="modal-card-foot"> 
         <button class="button is-success" form="add-note-form">Save your Note</button> 
-            <button class="button" @click="close">Cancel</button>  
+            <button class="button delete" @click="close" >Cancel</button>  
         </footer>
     
     </div>

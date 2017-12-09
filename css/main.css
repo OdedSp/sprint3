@@ -1,9 +1,12 @@
 @import '../lib/normalize.css';
-
 @import '_mail.css';
 @import './_map.css';
+@import './_note-detail.css';   
 @import './_editing.css';
+@import './my-place.css';
+
 
 textarea{
-    border: 1px rgb(221, 221, 221) solid
+   resize: none; 
 }
+
