@@ -8,7 +8,9 @@ export default {
     <div>
         <place-detail-cmp :currPlace="place" class="place-detail" @updatePlace="changePlace">
         </place-detail-cmp> 
-            <div id="map"></div>
+            <div class="map-wraper">
+            <google-map class="card-image"></google-map>
+            </div>
         </div>
         `,
     data() {
@@ -37,6 +39,7 @@ export default {
         }
     },
     components:{
-    PlaceDetailCmp
+    PlaceDetailCmp,
+    GoogleMap
     }
 }

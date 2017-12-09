@@ -39,3 +39,19 @@
     margin: .3vw;
     color: black;
 }
+.map-wraper{
+    margin: 0 8vw;
+    align-self: center;
+}
+.place-deatil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.edit-btn{
+    border: 1px solid black;
+    /* left: 5vw; */
+    width: 70%;
+    margin: 1vw;
+    display: block;
+}

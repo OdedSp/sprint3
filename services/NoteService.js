@@ -2,7 +2,7 @@ var notes = [
     {
         noteId: 101,
         title: 'this is my first note',
-        text: 'welcome to Naaman and Oded notes Keeper, fill free to add, remove, list, show and make up more shortcuts like CRUDL',
+        text: 'welcome to Naaman and Oded notes Keeper, feel free to add, remove, list, show and make up more shortcuts like CRUDL',
         imgUrl: null,
         color: 'red',
         priority: 5,

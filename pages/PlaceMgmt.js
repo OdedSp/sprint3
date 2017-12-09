@@ -4,6 +4,7 @@ import GoogleMap from '../cmps/GoogleMap.js'
 import PlaceCmp from '../cmps/PlaceCmp.js'
 import MapFeatureCmp from '../cmps/MapFeatureCmp.js'
 import AddPlaceModal from '../cmps/AddPlaceModal.js'
+import EventBusService, {MAP_CLICKED} from '../services/EventBusService.js'
 
 export default {
     template: `
@@ -14,7 +15,7 @@ export default {
         <map-feature-cmp  @geoFindMe="geoFindMe" 
          @searchPlace="getGeoByAddress">
         </map-feature-cmp>
-        <button @click="addingPlaceModal" v-if="placeSearchedMap" class="button is-primary save-place">save to my places</button>
+        <button @click="addingPlaceModal" v-if="placeSearchedMap" class="button is-primary save-place">save {{placeSearchedMap.name}} to my places</button>
         <add-place-modal v-if="addingPlace" :placeToAdd="placeSearchedMap" @addPlace="addNewPlace" @closeModal="addingPlaceModal"></add-place-modal>
         <google-map class="card-image"></google-map>
 
@@ -35,7 +36,14 @@ export default {
     },
     created() {
         PlaceService.getPlaces()
-            .then(places => this.places = places)
+            .then(places => this.places = places),
+        EventBusService.$on(MAP_CLICKED, cords=>{
+            MapService.getGeoByCords(cords)
+            .then(newPlace => {
+                console.log('1111', newPlace);
+                this.placeSearchedMap = Object.assign({}, newPlace)
+        })
+        })
     },
     computed: {
     },

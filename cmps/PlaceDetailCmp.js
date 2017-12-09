@@ -1,14 +1,17 @@
 export default {
-    template: ` 
-    <div  :class="{editing: !isEdit}">
-    <button @click="setEditMode">Edit</button>
-    <button v-if="!isEdit" @click="updatePlace">Save</button>
-   <h2><input type="text" :disabled="isEdit" v-model="currPlace.name"/></h2>
-  description: <textarea :disabled="isEdit" v-model="currPlace.desc"></textarea>
-   <p v-if="isEdit">Tags:
-   <span v-for="tag in currPlace.tags"> {{tag}},</span></p>
-   <p>Tags:<input type="text" v-model="currPlace.tags" v-if="!isEdit"></p>
-   </div>
+    template: ` <section>
+    <div class="place-deatil card">
+        <div  :class="{editing: !isEdit}"  class="content">
+            <h2><input type="text" :disabled="isEdit" v-model="currPlace.name"/></h2>
+                <textarea :disabled="isEdit" v-model="currPlace.desc"></textarea>
+            <p>Tags:
+            <span v-for="tag in currPlace.tags"> {{tag}}</span></p>
+            <p v-if="!isEdit"> add tags:<input type="text"></p>
+        </div>
+        <form @submit.prevent="updatePlace">  <button v-if="!isEdit"class="button" autofocus>Change Place</button></form>
+    </div>
+    <button @click="setEditMode" class="button edit-btn">Edit {{currPlace.placeId}}</button>
+   </section>
     `,
     props: ['currPlace']
     , methods: {
