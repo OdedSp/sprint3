@@ -1,8 +1,9 @@
 export default {
-    template: ` <section>
-    <button @click="geoFindMe">geoFindMe</button>
-    <form @submit.prevent="getGeoByAddress">
-         <input type="text" v-model="searchInput">
+    template: ` <section class="wraper map-feature">
+    <button @click="geoFindMe" class="button is-link is-outlined">📌 Me</button>
+    <form @submit.prevent="getGeoByAddress" class="wraper">
+         <input type="text" v-model="searchInput"  class="input search-input"  @input="getSearchRes">
+         <button class="button is-info">search</button>
     </form>
     </section>
     `,
@@ -22,6 +23,9 @@ export default {
         },
         addPlace(){
             this.$emit('addPlace')
+        },
+        getSearchRes(){
+            this.$emit('search')
         }
     },
     computed: {

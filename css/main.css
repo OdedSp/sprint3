@@ -1,4 +1,15 @@
 @import '../lib/normalize.css';
-
 @import '_mail.css';
 @import './_map.css';
+@import './_note-detail.css';   
+@import './_note-color.css';   
+@import './_editing.css';
+@import './_my-place.css';
+@import './_nav.css';
+@import './_footer.css';
+
+
+textarea{
+   resize: none; 
+}
+

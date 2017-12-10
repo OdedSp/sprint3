@@ -1,0 +1,27 @@
+.note-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgb(212, 212, 212);
+    margin: 3vw;
+    box-shadow: 5px 10px rgba(0,0,0,0.4);;
+}
+.note-detail input{
+    border :none ;
+    background-color : inherit ;
+
+}
+.note-detail textarea{
+    border: none;
+}
+.note-detail span{
+    width: 100%;
+    text-align: center;
+}
+.place-img img{
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 5px;
+}
+
