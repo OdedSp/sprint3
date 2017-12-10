@@ -2,7 +2,7 @@ import EventBusService, { MAP_CLICKED } from './EventBusService.js'
 import PlaceService from './PlaceService.js'
 
 const GOOGLE_KEY = 'AIzaSyCkW09cs2RDYMvyqpJBkZVQGkHjBi3R3VA';
-var currCords = { lat: -25.363, lng: 131.044 };
+var currCords = { lat: 32.0877246, lng: 34.8031935 };
 var placeSearchedMap = {}
 var map;
 
@@ -24,41 +24,64 @@ function initMap(zoom, cords) {
     });
     map.addListener('click', function (e) {
         addCLieckedPlace(e.latLng, map);
+        addMarker(e.latLng);
     });
+
+    function addMarker(location) {
+        console.log('location',location);
+        var marker = new google.maps.Marker({
+          position: location,
+          label: 'Temp',
+          map: map,
+          animation: google.maps.Animation.DROP
+        });
+      }
+
+      var infowindow = new google.maps.InfoWindow({
+        content: '<p>sss</p>'
+      });
+
     PlaceService.getPlaces()
         .then(places => {
-            var markers = places.map(place => {
-                return new google.maps.Marker({
+             places.map(place => {
+                 var marker = new google.maps.Marker({
                     position: { lat: place.lat, lng: place.lng },
                     map: map,
-                    title: place.name + ':' + place.desc || ''
-                });
+                    icon: setIcon(place),
+                    label:place.name,
+                    animation: google.maps.Animation.BOUNCE,
+                    title:  place.desc || ''
+                })
             })
         })
 }
-function _toggleBounce() {
-    console.log('ddd');
-    if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-    } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-    }
+
+function markerCLicked(e) {
+    console.log(e);
 }
 
-function _setMarkers(map) {
-    PlaceService.getPlaces()
-        .then(places => {
-            console.log('places', places);
-            var markers = places.map(place => {
-                return new google.maps.Marker({
-                    position: { lat: place.lat, lng: place.lng },
-                    map: map,
-                    title: place.name
-                });
-            })
-        })
-
+function setIcon(place) {
+    console.log(place.tags);
+    return {
+        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+      }
 }
+
+// function _setMarkers(map) {
+//     PlaceService.getPlaces()
+//         .then(places => {
+//             console.log('places', places);
+//              places.map(place => {
+//                  var marker = new google.maps.Marker({
+//                     position: { lat: place.lat, lng: place.lng },
+//                     map: map,
+//                     title: place.name,
+//                     label: place.desc || 'my-place',
+//                     animation: google.maps.Animation.BOUNCE
+//                 },)
+//             })
+//         })
+// }
 
 function addCLieckedPlace(latLng, map) {
     var cords = { lat: latLng.lat(), lng: latLng.lng() }
@@ -76,7 +99,7 @@ function getGeoByCords(cords) {
                     resolve(
                         {
                             name: res.data.results[0].formatted_address,
-                            tags: ['my place'],
+                            tags: ['fun', 'food', 'vacation', 'important'],
                             desc: 'my currnet place',
                             lat: res.data.results[0].geometry.location.lat,
                             lng: res.data.results[0].geometry.location.lng

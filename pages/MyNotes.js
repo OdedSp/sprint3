@@ -2,6 +2,7 @@ import NoteService from '../services/NoteService.js'
 import NoteCmp from '../cmps/NoteCmp.js'
 import AddNoteModal from '../cmps/AddNoteModal.js'
 
+'use strict'
 export default {
     template: `
             <section>
@@ -19,7 +20,8 @@ export default {
         return {
             notes: ['no notes yet'],
             addNoteModal: false,
-            newNote: null
+            newNote: null,
+            sortUp: false
         }
     },
     created() {
@@ -41,10 +43,19 @@ export default {
             this.addNoteModal = !this.addNoteModal
         },
         sortByTime(){
-            NoteService.sortByTime()
+            this.notes.sort((a, b) => {
+                console.log(a.time);
+                if (this.sortUp) {  return  b.time - a.time}
+                else { return  a.time - b.time}
+            });  
+            this.sortUp = !this.sortUp
         },
         sortByPriority(){
-            NoteService.sortByPriority()
+            this.notes.sort( (a, b) => {
+                if (this.sortUp) {  return  b.priority - a.priority}
+                else { return  a.priority - b.priority}
+            });  
+            this.sortUp = !this.sortUp
         }
     },
     computed: {

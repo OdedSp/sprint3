@@ -46,9 +46,10 @@ export default {
         return { newNote :{
             title:'',
             text:'',
-            color: null,
-            time: '11:30',
-            priority: 5
+            color: 'yellow',
+            date: '11:30',
+            priority: 5,
+            time: new Date
         }
         }
     },

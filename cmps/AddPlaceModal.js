@@ -12,12 +12,22 @@ export default {
                     <textarea v-model="placeToAdd.desc" class="textarea" placeholder="add your description"></textarea> 
                         <span>lat: <input type="number" v-model="placeToAdd.lat" disabled class="disabled-input cords"></span>
                         <span>lng: <input type="number" v-model="placeToAdd.lng" disabled class="disabled-input cords"></span>
-                    <div>
-                            <datalist id="placeTag">
-                            <option @change="addTag(tag)" v-for="tag in placeToAdd.tags" :value="tag" class="input"></option>
-                            <p> tags:<input list="placeTag" />
-                            </p>
-                            </datalist>
+                    <div class="dropdown" :class="{'is-active': dropDownTag}">
+                    <div class="dropdown-trigger" @click="dropDownTag = !dropDownTag">
+                                    <button class="button" >
+                                        <span>chose a tag</span>
+                                        <span class="icon is-small">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <a  class="dropdown-item" v-for="tag in placeToAdd.tags" @click="addTag(tag), dropDownTag = !dropDownTag">
+                                        {{tag}}
+                                        </a>
+                                    </div>
+                                </div>
                             <input type="text" v-model="placeToAdd.imgUrl" class="input" placeholder="add image url">
                     </div>  
             <div class="modal-card-foot">
@@ -35,7 +45,9 @@ export default {
             desc: '',
             lat:0,
             lng:0,
-            tags: ['israel']}
+            tags: []
+        },
+            dropDownTag : false
         }
     },
     methods: {
@@ -45,6 +57,10 @@ export default {
         },
         closeModal() {
             this.$emit('closeModal')
+        },
+        addTag(tag){
+            this.placeToAdd.tags = tag
+            console.log(this.placeToAdd.tags);
         }
     }
 }
