@@ -5,6 +5,8 @@
 @import './_note-color.css';   
 @import './_editing.css';
 @import './_my-place.css';
+@import './_nav.css';
+@import './_footer.css';
 
 
 textarea{
