@@ -14,6 +14,7 @@
     background: lightgoldenrodyellow;
 }
 
+
 .color-picker input[type=radio]{
     position: absolute;
     visibility: hidden;
@@ -33,3 +34,8 @@
   .color-picker-wrapper{
       display: flex;
   }
+  .selcted{
+    border: 1px solid black;
+    /* width: 50px; */
+    color: white;
+}
