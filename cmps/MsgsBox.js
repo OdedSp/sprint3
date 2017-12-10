@@ -3,36 +3,23 @@ import MailServices from '../services/MailServices.js';
 export default {
     template: `
     <div class="MsgsBox">
-        <div class="statusDisplay" v-if="(show==='inbox' && statusDisplay!=='all')">
-            <ul>
-                <li v-for="msg in msgs"
-                v-if="( msg.type==='inbox' && (statusDisplay==='read' && msg.isRead || statusDisplay==='unread' && !msg.isRead))"
-                :class="{unread:!msg.isRead}" @click="msgCliked(msg.id)">
-                    <span v-show="msg.important">➲</span>From: {{msg.from}} &#09; To: {{msg.to}} &#09; {{msg.title}}
-                    <button @click.stop="deleteMsg(msg.id)">🗑</button>
-                    <button v-show="msg.type==='inbox'" @click.stop="markUnread(msg.id)">🖂</button>
-                </li>
-            </ul>
-        </div>
-        <div class="regDispaly" v-else>
-            <ul>
-                <li v-for="msg in msgs" v-if="(show===msg.type || show==='search')" :class="{unread:!msg.isRead}" @click="msgCliked(msg.id)">
-                    <span v-show="msg.important">➲</span>From: {{msg.from}} &#09; To: {{msg.to}} &#09; {{msg.title}}
-                    <button @click.stop="deleteMsg(msg.id)">🗑</button>
-                    <button v-show="msg.type==='inbox'" @click.stop="markUnread(msg.id)">🖂</button>
-                </li>
-            </ul>
-        </div>
+        <ul>
+            <li v-for="msg in msgs" v-if="shouldDisplay(msg)" @click="msgCliked(msg.id)" class="msg-head">
+                <header class="card-header">
+                    <p class="card-header-title" :class="{unread:!msg.isRead}">
+                        <span v-show="msg.important">➲</span>From: {{msg.from}} &#09; To: {{msg.to}} &#09; {{msg.title}}
+                    </p>
+                    <a href="#" class="card-header-icon">
+                    ▼
+                    </a>
+                    <a @click.stop="deleteMsg(msg.id)" class="card-header-icon">🗑</a>
+                    <a v-show="msg.type==='inbox'" @click.stop="markUnread(msg.id)" class="card-header-icon">🖂</a>
+                </header>
+            </li>
+        </ul>
     </div>
     `,
     props: ['msgs','show', 'statusDisplay'],
-    // computed: {
-    //     shouldDisplay(msg){
-    //         (this.show===msg.type || this.show==='search' ||
-    //         this.statusDisplay==='all' || (this.statusDisplay === 'read' && msg.isRead) ||
-    //         (this.statusDisplay === 'unread' && !msg.isRead))
-    //     }
-    // },
     methods: {
         msgCliked(id){
             this.$emit('msgCliked', id)
@@ -42,6 +29,14 @@ export default {
         },
         markUnread(id){
             this.$emit('markUnread', id)
+        },
+        shouldDisplay(msg){
+            if (this.show==='inbox' && this.statusDisplay!=='all') {
+                return (msg.type ==='inbox' && 
+                (this.statusDisplay==='read' && msg.isRead || this.statusDisplay==='unread' && !msg.isRead))    
+            } else {
+                return (this.show===msg.type || this.show==='search')
+            }
         }
     }
 }

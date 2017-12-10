@@ -13,7 +13,7 @@ var myVue = new Vue({
         <nav-cmp>
         </nav-cmp>
         <router-view></router-view>  
-        <footer> coffe rights Nemo & Oded</footer>
+        <footer> coffee rights Nemo & Oded</footer>
         </section>    
     `,
     created() {

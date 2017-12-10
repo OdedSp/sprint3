@@ -1,5 +1,4 @@
 import MailServices from '../services/MailServices.js';
-
 import MsgsBox from '../cmps/MsgsBox.js';
 import ComposeMsg from '../cmps/ComposeMsg.js';
 import ShowMsg from '../cmps/ShowMsg.js';
@@ -17,15 +16,15 @@ export default {
         <input type="text" v-model="searchTerm" @keyup="changeView">
 
         <div class="radioDisplay" v-show="show==='inbox'">
-            <input v-model="display" type="radio" id="all"name="display" value="all" checked><label for="all">All</label>
-            <input type="radio" id="read" name="display" value="read"><label for="read">Read</label>
-            <input type="radio" id="unread" name="display" value="unread"><label for="unread">Unread</label>
+            <input v-model="statusDisplay" type="radio" id="all"name="display" value="all" checked><label for="all">All</label>
+            <input v-model="statusDisplay" type="radio" id="read" name="display" value="read"><label for="read">Read</label>
+            <input v-model="statusDisplay" type="radio" id="unread" name="display" value="unread"><label for="unread">Unread</label>
         </div>
 
-        <msgs-box :msgs="msgs" :show="show" :searchTerm="searchTerm"
-        @msgCliked="routeToMsg" @deleteMsg="deleteMsg" @markUnread="markUnread">
+        <msgs-box :msgs="msgs" :show="show" :searchTerm="searchTerm" :statusDisplay="statusDisplay"
+        @msgCliked="routeToMsg" @deleteMsg="deleteMsg" @markUnread="markUnread" @closeMsg="selectedMsg=null">
         </msgs-box>
-        <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg"
+        <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg" @closeMsg="selectedMsg=null"
         @deleteMsg="deleteMsg" @sendMsg="sendMsg" @saveDraft="saveDraft" @markUnread="markUnread">
         </show-msg>
         <compose-msg v-show="compose" @sendMsg="sendMsg" @saveDraft="saveDraft"></compose-msg>
@@ -39,6 +38,7 @@ export default {
             display: 'all',
             searchTerm: '',
             selectedMsg: null,
+            statusDisplay: 'all'
         }
     },
     created() {
