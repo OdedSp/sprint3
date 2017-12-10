@@ -13,7 +13,7 @@ export default {
             <button @click="compose=!compose"  class="button is-link new-mail-btn">🖉</button>
         </aside>
         
-        <input type="text" v-model="searchTerm" @keyup="changeView">
+        <input type="text" v-model="searchTerm" @keyup="changeView" placeholder="Search...">
 
         <div class="radioDisplay" v-show="show==='inbox'">
             <input v-model="statusDisplay" type="radio" id="all"name="display" value="all" checked><label for="all">All</label>
@@ -97,6 +97,7 @@ export default {
                 })
                 this.show = 'inbox'
             }
+            this.selectedMsg=null
         },
         folderClicked(folder) {
             this.$router.push(`/mail/` + folder)
