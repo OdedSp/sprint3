@@ -7,9 +7,14 @@
 @import './_my-place.css';
 @import './_nav.css';
 @import './_footer.css';
+@import './_my-notes.css';
 
 
 textarea{
    resize: none; 
+}
+
+.center{
+    text-align: center;
 }
 

@@ -5,9 +5,11 @@ import AddNoteModal from '../cmps/AddNoteModal.js'
 export default {
     template: `
             <section>
-            <button @click="isModal" class="button is-primary">Add a New Note</button>
-            <button @click="sortByTime" class="button is-primary">sortByTime</button>
-            <button @click="sortByPriority" class="button is-primary">sortByPriority</button>
+            <div class="notes-panel">
+                <button @click="isModal" class="button is-primary">Add a New Note</button>
+                <button @click="sortByTime" class="button is-primary">sortByTime</button>
+                <button @click="sortByPriority" class="button is-primary">sortByPriority</button>
+            </div>
                 <add-note-modal v-if="addNoteModal" @addNewNote="addNote" @closeModal="isModal"></add-note-modal>
                 <note-cmp :notesToRender="notes" @noteTodelete="delNote"></note-cmp>
             </section>

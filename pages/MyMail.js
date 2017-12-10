@@ -7,34 +7,28 @@ import ShowMsg from '../cmps/ShowMsg.js';
 export default {
     template: `
     <section>
-        <aside>
-            <p @click="folderClicked('inbox')">Inbox</p>
-            <p @click="folderClicked('sent')">Sent Mail</p>
-            <p @click="folderClicked('drafts')">Drafts</p>
+        <aside class="panel-tabs">
+            <a @click="folderClicked('inbox')">Inbox</a>
+            <a @click="folderClicked('sent')">Sent Mail</a>
+            <a @click="folderClicked('drafts')">Drafts</a>
+            <button @click="compose=!compose"  class="button is-link new-mail-btn">🖉</button>
         </aside>
         
         <input type="text" v-model="searchTerm" @keyup="changeView">
 
         <div class="radioDisplay" v-show="show==='inbox'">
-        <input v-model="display" type="radio" id="all"
-        name="display" value="all" checked>
-        <label for="all">All</label>
-        
-        <input type="radio" id="read"
-        name="display" value="read">
-        <label for="read">Read</label>
-        
-        <input type="radio" id="unread"
-        name="display" value="unread">
-        <label for="unread">Unread</label>
+            <input v-model="display" type="radio" id="all"name="display" value="all" checked><label for="all">All</label>
+            <input type="radio" id="read" name="display" value="read"><label for="read">Read</label>
+            <input type="radio" id="unread" name="display" value="unread"><label for="unread">Unread</label>
         </div>
-        <msgs-box :msgs="msgs" :show="show" :searchTerm="searchTerm" @msgCliked="routeToMsg" @deleteMsg="deleteMsg" @markUnread="markUnread">
+
+        <msgs-box :msgs="msgs" :show="show" :searchTerm="searchTerm"
+        @msgCliked="routeToMsg" @deleteMsg="deleteMsg" @markUnread="markUnread">
         </msgs-box>
         <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg"
         @deleteMsg="deleteMsg" @sendMsg="sendMsg" @saveDraft="saveDraft" @markUnread="markUnread">
         </show-msg>
         <compose-msg v-show="compose" @sendMsg="sendMsg" @saveDraft="saveDraft"></compose-msg>
-        <button @click="compose=!compose" @msgSent="compose=false">🖉</button>
     </section>
     `,
     data() {
@@ -113,7 +107,6 @@ export default {
     components: {
         ComposeMsg,
         ShowMsg,
-        // ListMsgs,
         MsgsBox
     }
 }

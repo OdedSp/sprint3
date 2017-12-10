@@ -16,14 +16,14 @@ export default {
              <time> timestamp:{{note.date}}</time>
         </div>
         </div>
-        <footer class="card-footer">
+        <div class="card-footer">
             <p class="card-footer-item"> <span>
                 <button  @click="noteTodelete(note.noteId)"  class="button is-danger">  🗑 </button>
             </span></p>
                 <p class="card-footer-item"><span>
                 <router-link :to="'/note/' + note.noteId" class="button is-link">More Info</router-link>
                  </span> </p>
-        </footer>
+        </div>
           </div>
     </section>
     `,

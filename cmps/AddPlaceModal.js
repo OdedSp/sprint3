@@ -20,10 +20,10 @@ export default {
                             </datalist>
                             <input type="text" v-model="placeToAdd.imgUrl" class="input" placeholder="add image url">
                     </div>  
-            <footer class="modal-card-foot">
+            <div class="modal-card-foot">
                     <button form="add-place-form"  class="button">save</button>
                     <button class="button is-text" @click="closeModal">Cancel</button>
-            </footer>
+            </div>
         </div>
     </div>
     </section>
