@@ -19,7 +19,7 @@ function setNewPlace(placeApi) {
 function initMap(zoom, cords) {
 
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: zoom || 4,
+        zoom: zoom || 14,
         center: cords || currCords
     });
     map.addListener('click', function (e) {
@@ -95,7 +95,8 @@ function geoFindMe() {
         navigator.geolocation.getCurrentPosition((position) => {
             currCords.lat = position.coords.latitude;
             currCords.lng = position.coords.longitude;
-            initMap(16);
+            // initMap(16);
+            map.panTo(currCords)
             resolve(currCords)
         }, () => {
             reject(console.log('Nemo -Plesae allow geo Location on your browser'))
@@ -110,7 +111,8 @@ function getGeoByAddress(placeSearched) {
                 currCords.lat = res.data.results[0].geometry.location.lat;
                 currCords.lng = res.data.results[0].geometry.location.lng;
                 placeSearchedMap = res.data.results[0]
-                initMap(14);
+                // initMap(14);
+                map.panTo(currCords)
                 resolve({
                     name: res.data.results[0].address_components[0].long_name,
                     tags: res.data.results[0].address_components[0].types,

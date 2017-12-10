@@ -1,14 +1,17 @@
-var notes = [
-    {
-        noteId: 101,
-        title: 'this is my first note',
-        text: 'welcome to Naaman and Oded notes Keeper, feel free to add, remove, list, show and make up more shortcuts like CRUDL',
-        imgUrl: null,
-        color: 'red',
-        priority: 5,
-        date :new Date()
-    },
-]
+import storageService from './StorageService.js'
+const KEY_STORE = 'myNotes';
+var notes = storageService.load(KEY_STORE) || 
+    [ {
+    noteId: 101,
+    title: 'this is my first note',
+    text: 'welcome to Naaman and Oded notes Keeper, feel free to add, remove, list, show and make up more shortcuts like CRUDL',
+    imgUrl: null,
+    color: 'red',
+    priority: 5,
+    date :new Date()
+}]
+
+
 function _getNextId() {
     var maxId = notes.reduce((acc, note) => {
         return (note.noteId > acc) ? note.noteId : acc
@@ -27,6 +30,7 @@ function getNotes() {
 function delNote(noteId) {
     var noteTodelIdx = notes.findIndex(note => note.noteId === noteId)
     notes.splice(noteTodelIdx, 1)
+    storageService.store(KEY_STORE, notes)
 }
 
 function addNote(newNote) {
@@ -35,9 +39,9 @@ function addNote(newNote) {
             newNote.date = new Date()
             newNote.priority = +newNote.priority
             notes.push(newNote)
+            storageService.store(KEY_STORE, notes)
             resolve(newNote)
     })
-
 }
 function getNoteById(noteId) {
     return new Promise((resolve, reject) => {
@@ -48,6 +52,7 @@ function updateNote(noteUpdated) {
     console.log('noteUpdated',noteUpdated);
     var idx = notes.findIndex(note => note.noteId === noteUpdated.noteId)
     notes.splice(idx,1,noteUpdated)
+    storageService.store(KEY_STORE, notes)
 }
 
 function sortByPriority() {

@@ -2,7 +2,7 @@ export default {
     template: `
     <section class="note-card">
     <div class="card" v-for="note in notesToRender">
-        <header class="card-header">
+        <header class="card-header" :class="'card-' + note.color">
             <p class="card-header-title">
                 {{note.title}}
             </p>

@@ -6,6 +6,8 @@ export default {
     template: `
             <section>
             <button @click="isModal" class="button is-primary">Add a New Note</button>
+            <button @click="sortByTime" class="button is-primary">sortByTime</button>
+            <button @click="sortByPriority" class="button is-primary">sortByPriority</button>
                 <add-note-modal v-if="addNoteModal" @addNewNote="addNote" @closeModal="isModal"></add-note-modal>
                 <note-cmp :notesToRender="notes" @noteTodelete="delNote"></note-cmp>
             </section>
@@ -35,6 +37,12 @@ export default {
         },
         isModal(){
             this.addNoteModal = !this.addNoteModal
+        },
+        sortByTime(){
+            NoteService.sortByTime()
+        },
+        sortByPriority(){
+            NoteService.sortByPriority()
         }
     },
     computed: {

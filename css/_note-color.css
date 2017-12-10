@@ -1,0 +1,35 @@
+.card-blue{
+    background: lightblue;
+}
+.card-red{
+    background: lightcoral;
+}
+.card-green{
+    background: lightgreen;
+}
+.card-cyan{
+    background: lightcyan;
+}
+.card-yellow{
+    background: lightgoldenrodyellow;
+}
+
+.color-picker input[type=radio]{
+    position: absolute;
+    visibility: hidden;
+  }
+.color-picker{
+    cursor: pointer;
+    font-size: 1.3em;
+    color: rgba(255, 255, 255, 0);
+    border: .1vw solid gray;
+    border-radius:  5%;
+    padding: .5vw;
+    margin: .5vw;
+  }
+.color-picker:hover{
+    color: inherit;
+}
+  .color-picker-wrapper{
+      display: flex;
+  }

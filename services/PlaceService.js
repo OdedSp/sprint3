@@ -5,7 +5,7 @@ var places = storageService.load(KEY_STORE) || [
         desc: 'lorem ipsum bla bla',
         name: 'London',
         lat: 37.4224764,
-        lng: -122.0842499,
+        lng: 34.803196,
         placeId: 1,
         tags: ['israel', 'sky'],
         imgUrl: 'http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg'
@@ -60,6 +60,7 @@ function removePlace(placeId) {
     return new Promise((resolve, reject) => {
         var placeId = places.findIndex(place => place.placeId === placeId)
         places.splice(placeId, 1);
+        storageService.store(KEY_STORE, places)
         resolve()
     });
 }
