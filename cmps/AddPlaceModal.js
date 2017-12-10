@@ -18,6 +18,7 @@ export default {
                             <p> tags:<input list="placeTag" />
                             </p>
                             </datalist>
+                            <input type="text" v-model="placeToAdd.imgUrl" class="input" placeholder="add image url">
                     </div>  
             <footer class="modal-card-foot">
                     <button form="add-place-form"  class="button">save</button>

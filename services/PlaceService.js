@@ -8,6 +8,7 @@ var places = storageService.load(KEY_STORE) || [
         lng: -122.0842499,
         placeId: 1,
         tags: ['israel', 'sky'],
+        imgUrl: 'http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg'
     }
 ]
 
@@ -21,6 +22,7 @@ function genratePlace() {
         lat: 0,
         lng: 0,
         tags: [fun, work],
+        imgUrl:''
     }
 }
 function _getNextId() {

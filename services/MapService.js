@@ -4,6 +4,7 @@ import PlaceService from './PlaceService.js'
 const GOOGLE_KEY = 'AIzaSyCkW09cs2RDYMvyqpJBkZVQGkHjBi3R3VA';
 var currCords = { lat: -25.363, lng: 131.044 };
 var placeSearchedMap = {}
+var map;
 
 function setNewPlace(placeApi) {
     return {
@@ -17,7 +18,7 @@ function setNewPlace(placeApi) {
 
 function initMap(zoom, cords) {
 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom || 4,
         center: cords || currCords
     });
@@ -30,7 +31,7 @@ function initMap(zoom, cords) {
                 return new google.maps.Marker({
                     position: { lat: place.lat, lng: place.lng },
                     map: map,
-                    title: place.name + ':'+ place.desc|| ''
+                    title: place.name + ':' + place.desc || ''
                 });
             })
         })
@@ -109,7 +110,7 @@ function getGeoByAddress(placeSearched) {
                 currCords.lat = res.data.results[0].geometry.location.lat;
                 currCords.lng = res.data.results[0].geometry.location.lng;
                 placeSearchedMap = res.data.results[0]
-                initMap(10);
+                initMap(14);
                 resolve({
                     name: res.data.results[0].address_components[0].long_name,
                     tags: res.data.results[0].address_components[0].types,
@@ -121,11 +122,19 @@ function getGeoByAddress(placeSearched) {
     })
 }
 
+function autoComplete() {
+    var input = document.querySelector('.search-input');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+    
+}
+
+
 export default {
     geoFindMe,
     initMap,
     getGeoByAddress,
     getGeoByCords,
     addCLieckedPlace,
-    _setMarkers
+    autoComplete
 }

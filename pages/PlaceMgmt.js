@@ -13,7 +13,7 @@ export default {
         <place-cmp :myPlaces="places" @delPlace="removePlace">
         </place-cmp>
         <map-feature-cmp  @geoFindMe="geoFindMe" 
-         @searchPlace="getGeoByAddress">
+         @searchPlace="getGeoByAddress" @search="searchAutoComplete">
         </map-feature-cmp>
         <button @click="addingPlaceModal" v-if="placeSearchedMap" class="button is-primary save-place">save {{placeSearchedMap.name}} to my places</button>
         <add-place-modal v-if="addingPlace" :placeToAdd="placeSearchedMap" @addPlace="addNewPlace" @closeModal="addingPlaceModal"></add-place-modal>
@@ -70,6 +70,9 @@ export default {
         },
         removePlace(placeId) {
             PlaceService.removePlace(placeId)
+        },
+        searchAutoComplete(){
+            MapService.autoComplete()
         },
         getGeoByAddress(searchInput) {
             MapService.getGeoByAddress(searchInput)
