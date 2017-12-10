@@ -1,7 +1,7 @@
 'use strict';
+import NavCmp from './cmps/NavCmp.js'
 
 import myRoutes from './routes.js';
-import NavCmp from './cmps/NavCmp.js'
 
 Vue.use(VueRouter);
 const myRouter = new VueRouter({ routes: myRoutes });
