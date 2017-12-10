@@ -1,5 +1,6 @@
+import EventBusService, { MAP_CLICKED } from './EventBusService.js'
+import PlaceService from './PlaceService.js'
 
-import EventBusService, {MAP_CLICKED} from './EventBusService.js'
 const GOOGLE_KEY = 'AIzaSyCkW09cs2RDYMvyqpJBkZVQGkHjBi3R3VA';
 var currCords = { lat: -25.363, lng: 131.044 };
 var placeSearchedMap = {}
@@ -15,6 +16,7 @@ function setNewPlace(placeApi) {
 }
 
 function initMap(zoom, cords) {
+
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom || 4,
         center: cords || currCords
@@ -22,10 +24,43 @@ function initMap(zoom, cords) {
     map.addListener('click', function (e) {
         addCLieckedPlace(e.latLng, map);
     });
+    PlaceService.getPlaces()
+        .then(places => {
+            var markers = places.map(place => {
+                return new google.maps.Marker({
+                    position: { lat: place.lat, lng: place.lng },
+                    map: map,
+                    title: place.name + ':'+ place.desc|| ''
+                });
+            })
+        })
+}
+function _toggleBounce() {
+    console.log('ddd');
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
+
+function _setMarkers(map) {
+    PlaceService.getPlaces()
+        .then(places => {
+            console.log('places', places);
+            var markers = places.map(place => {
+                return new google.maps.Marker({
+                    position: { lat: place.lat, lng: place.lng },
+                    map: map,
+                    title: place.name
+                });
+            })
+        })
+
 }
 
 function addCLieckedPlace(latLng, map) {
-    var cords = {lat: latLng.lat() ,lng: latLng.lng()}  
+    var cords = { lat: latLng.lat(), lng: latLng.lng() }
     EventBusService.$emit(MAP_CLICKED, cords)
 };
 
@@ -91,5 +126,6 @@ export default {
     initMap,
     getGeoByAddress,
     getGeoByCords,
-    addCLieckedPlace
+    addCLieckedPlace,
+    _setMarkers
 }

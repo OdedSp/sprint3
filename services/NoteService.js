@@ -50,6 +50,24 @@ function updateNote(noteUpdated) {
     notes.splice(idx,1,noteUpdated)
 }
 
+function sortByPriority() {
+    return new Promise((resolve, reject) => {
+        notes.sort(function (a, b) {
+            return a.priority - b.priority;
+        });    
+        resolve()
+    });
+}
+
+function sortByTime() {
+    return new Promise((resolve, reject) => {
+        notes.sort(function (a, b) {
+            return  b.date - a.date;
+        });    
+        resolve()
+    });
+}
+
 
 
 export default {
@@ -57,5 +75,7 @@ export default {
     delNote,
     addNote,
     getNoteById,
-    updateNote
+    updateNote,
+    sortByTime,
+    sortByPriority
 }

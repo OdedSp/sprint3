@@ -1,35 +1,32 @@
-var places = [{desc : 'lorem ipsum bla bla',
-name:'London',
-    lat : 37.4224764,
-    lng : -122.0842499,
-    placeId : 1,
-    tags : ['israel', 'sky'],
-    },
+import storageService from './StorageService.js'
+const KEY_STORE = 'myPlaces';
+var places = storageService.load(KEY_STORE) || [
     {
-        name:'naaman',
-   desc : 'lorem ipsum bla bla',
-    lat : 37.4224764,
-    lng : -122.0842499,
-    placeId : 3,
-    tags : ['israel', 'sky'],
+        desc: 'lorem ipsum bla bla',
+        name: 'London',
+        lat: 37.4224764,
+        lng: -122.0842499,
+        placeId: 1,
+        tags: ['israel', 'sky'],
     }
-];
+]
+
 
 function genratePlace() {
     return {
-        name:'',
+        name: '',
         desc: '',
         placeId: _getNextId(),
         photos: [],
-        lat:0,
-        lng:0,
+        lat: 0,
+        lng: 0,
         tags: [fun, work],
     }
 }
-function _getNextId(){
+function _getNextId() {
     var maxId = places.reduce((acc, place) => {
-    return (place.placeId > acc) ? place.placeId : acc
-            }, 0);
+        return (place.placeId > acc) ? place.placeId : acc
+    }, 0);
     if (!maxId) return 101
     else return maxId + 1;
 }
@@ -37,16 +34,16 @@ function _getNextId(){
 function getPlaceById(placeId) {
     if (places.length === 0) {
         genratePlaces()
-    } 
-        
-    return new Promise((resolve, reject)=>{
+    }
+
+    return new Promise((resolve, reject) => {
         var findedPlace = places.find(place => place.placeId === placeId)
         if (findedPlace) {
             resolve(findedPlace)
         } else {
             reject('no place with this id')
-        }             
-    })    
+        }
+    })
 }
 
 
@@ -58,7 +55,7 @@ function getPlaces() {
 }
 
 function removePlace(placeId) {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         var placeId = places.findIndex(place => place.placeId === placeId)
         places.splice(placeId, 1);
         resolve()
@@ -66,25 +63,30 @@ function removePlace(placeId) {
 }
 
 function savePlace(place) {
-    console.log('adding place', place);
-    return new Promise((resolve, reject)=>{
+    // console.log('adding place', place);
+    return new Promise((resolve, reject) => {
         if (place.placeId) {
             var placeToUpdateIdx = places.findIndex(currPlace => currPlace.placeId === place.placeId)
             places.splice(placeToUpdateIdx, 1, place);
-        }  else {
+        } else {
             place.placeId = _getNextId();
             places.push(place);
+
+            console.log('adding place', places);
+
         }
         resolve(place)
+        storageService.store(KEY_STORE, places)
         // reject('failed to save/update place')
     });
 }
 
 
-export default{
+export default {
     getPlaces,
     genratePlace,
     removePlace,
     savePlace,
-    getPlaceById
+    getPlaceById,
+    places
 }

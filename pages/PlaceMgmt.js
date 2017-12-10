@@ -80,6 +80,7 @@ export default {
         addNewPlace(newPlace) {
             PlaceService.savePlace(newPlace)
             this.addingPlace = false
+            MapService.initMap()
         }
     },
     mounted: function () {
