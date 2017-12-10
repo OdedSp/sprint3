@@ -37,13 +37,10 @@ function initMap(zoom, cords) {
         });
       }
 
-      var infowindow = new google.maps.InfoWindow({
-        content: '<p>sss</p>'
-      });
-
+  
     PlaceService.getPlaces()
         .then(places => {
-             places.map(place => {
+             places.forEach(place => {
                  var marker = new google.maps.Marker({
                     position: { lat: place.lat, lng: place.lng },
                     map: map,
@@ -52,6 +49,10 @@ function initMap(zoom, cords) {
                     animation: google.maps.Animation.BOUNCE,
                     title:  place.desc || ''
                 })
+            
+                marker.addListener('click', function () {
+                    console.log('place',place);
+                });
             })
         })
 }

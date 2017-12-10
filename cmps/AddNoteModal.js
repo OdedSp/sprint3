@@ -11,16 +11,21 @@ export default {
         <section class="modal-card-body">
             <textarea  v-model="newNote.text" form="add-note-form"  placeholder="add your notes." class="textarea is-info"></textarea>  
         <p class="color-picker-wrapper" >    
-            <label  class="card-red color-picker"><input type="radio" value="red" v-model="newNote.color">
-            red</label>
-            <label  class="card-blue color-picker"><input type="radio" value="blue" v-model="newNote.color">
-            blue</label>
-            <label  class="card-green color-picker"><input type="radio" value="green" v-model="newNote.color">
-            green</label>
-            <label  class="card-cyan color-picker"><input type="radio" value="cyan" v-model="newNote.color">
-            cyan</label>
-            <label  class="card-yellow color-picker"><input type="radio" value="yellow" v-model="newNote.color">
-            yellow</label>
+            <label  class="card-red color-picker" :class="{selcted: newNote.color === 'red'}">
+                <input type="radio" value="red" v-model="newNote.color">red
+            </label>
+            <label  class="card-blue color-picker" :class="{selcted: newNote.color === 'blue'}">
+            <input type="radio" value="blue" v-model="newNote.color"> blue
+            </label>
+            <label  class="card-green color-picker" :class="{selcted: newNote.color === 'green'}">
+                <input type="radio" value="green" v-model="newNote.color">green
+            </label>
+            <label  class="card-cyan color-picker" :class="{selcted: newNote.color === 'cyan'}">
+                <input type="radio" value="cyan" v-model="newNote.color"> cyan
+           </label>
+            <label  class="card-yellow color-picker" :class="{selcted: newNote.color === 'yellow'}">
+            <input type="radio" value="yellow" v-model="newNote.color">yellow
+            </label>
         </p>
         <p>            priority: <select v-model="newNote.priority" form="add-note-form" class="select">
             <option value=1>very low</option>
