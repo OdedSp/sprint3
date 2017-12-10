@@ -3,6 +3,14 @@ import MailServices from '../services/MailServices.js';
 export default {
     template: `
     <div class="inbox">
+<<<<<<< HEAD
+        <ul>
+            <li v-for="msg in msgs" :class="{unread:!msg.isRead}" @click="msgCliked(msg.id, 'inbox')">
+                <span v-show="msg.important">➲</span>From: {{msg.from}} - {{msg.title}}
+                <button @click.stop="deleteMsg(msg.id, 'inbox')">🗑</button>
+            </li>
+        </ul>
+=======
     <div class="card">
     <ul>
         <li v-for="msg in msgs" :class="{unread:!msg.isRead}">
@@ -25,11 +33,12 @@ export default {
         </li>
     </ul>
     </div>
+>>>>>>> c3c61947b049b006b899ea04f41fb2a4ac5d7fae
     </div>
     `,
     props: ['msgs'],
     // created() {
-    //     MailServices.getMsgs(MailServices.msgsToMe)
+    //     MailServices.getMsgs(MailServices.inbox)
     //         .then(msgs => {
     //             this.msgs = msgs
     //         })
@@ -43,15 +52,16 @@ export default {
         }
     },
     methods: {
-        msgCliked(id){
-            this.$emit('msgCliked', id)
+        msgCliked(id, folder){
+            this.$emit('msgCliked', id, folder)
         },
-        routeToMsg(msgId) {
-            this.$router.push('/inbox/'+msgId)
-            MailServices.changeReadStatus(msgId, true)
-        },
-        deleteMsg(msgId){
-            MailServices.deleteMsg(msgId, MailServices.msgsToMe)
+        // routeToMsg(msgId) {
+        //     this.$router.push('/inbox/'+msgId)
+        //     MailServices.changeReadStatus(msgId, true)
+        // },
+        deleteMsg(id, folder){
+            this.$emit('deleteMsg', id, folder)
+            // MailServices.deleteMsg(msgId, MailServices.inbox)
         }
     }
 }

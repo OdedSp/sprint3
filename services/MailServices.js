@@ -1,4 +1,4 @@
-var msgsToMe = [
+var msgs = [
     {
         id: 1,
         from: 'Ofir Yamin',
@@ -9,7 +9,8 @@ var msgsToMe = [
         isRead: true,
         important: false,
         sentOn: null,
-        receivedOn: moment([2017, 11, 6]).fromNow()
+        receivedOn: moment([2017, 11, 6]).fromNow(),
+        type: 'inbox'
     },
     {
         id: 2,
@@ -21,7 +22,8 @@ var msgsToMe = [
         isRead: false,
         important: true,
         sentOn: null,
-        receivedOn: moment([2017, 11, 5]).fromNow()
+        receivedOn: moment([2017, 11, 5]).fromNow(),
+        type: 'inbox'
     },
     {
         id: 3,
@@ -33,13 +35,11 @@ var msgsToMe = [
         isRead: false,
         important: false,
         sentOn: null,
-        receivedOn: moment([2017, 9, 6]).fromNow()
-    }
-]
-
-var sentMsgs = [
+        receivedOn: moment([2017, 9, 6]).fromNow(),
+        type: 'inbox'
+    },
     {
-        id: 1,
+        id: 4,
         from: 'me',
         to: 'Naaman',
         title: 'Let\'s make like a grandma',
@@ -48,24 +48,24 @@ var sentMsgs = [
         isRead: true,
         important: false,
         sentOn: moment([2001, 8, 11]).fromNow(),
-        receivedOn: null
+        receivedOn: null,
+        type: 'sent'
     },
     {
-        id: 2,
+        id: 5,
         from: 'me',
         to: 'Shem',
         title: 'How deep is your love?',
         text: 'bla bla bla',
         isSent: true,
+        isRead: true,
         important: true,
         sentOn: moment([1990, 10, 1]).fromNow(),
-        receivedOn: null
+        receivedOn: null,
+        type: 'sent'
     },
-]
-
-var drafts = [
     {
-        id: 1,
+        id: 6,
         from: 'me',
         to: 'Ofir Smol',
         title: 'CRUDL',
@@ -74,10 +74,11 @@ var drafts = [
         isRead: true,
         important: true,
         sentOn: null,
-        receivedOn: null
+        receivedOn: null,
+        type: 'drafts'
     },
     {
-        id: 2,
+        id: 7,
         from: 'me',
         to: 'Ben',
         title: 'Smooth criminal',
@@ -86,44 +87,51 @@ var drafts = [
         isRead: true,
         important: true,
         sentOn: null,
-        receivedOn: null
-    },
+        receivedOn: null,
+        type: 'drafts'
+    }
 ]
 
-var allMsgs = msgsToMe.concat(sentMsgs)
-allMsgs = allMsgs.concat(drafts)
-    
-
-
-function getMsgs(msgs) {
+function getMsgs() {
     return new Promise((resolve, reject)=>{
         setTimeout(()=>{resolve(msgs)}, 700)
     });
 }
 
-function _findNextId(arr) {
-    var maxId = arr.reduce((acc, msg)=>{
+function _findNextId() {
+    var maxId = msgs.reduce((acc, msg)=>{
         return (msg.id > acc)? msg.id : acc
     }, 0);
     return maxId + 1;
 }
 
 function sendMsg (msgObj) {
-    msgObj.id = _findNextId(sentMsgs)
     msgObj.isSent = true;
     msgObj.sentOn = moment(Date.now()).fromNow();
-    sentMsgs.push(msgObj)
     if (msgObj.to==='me') {
-        
+        msgObj.type = 'inbox'
+    } else msgObj.type = 'sent'
+    if (msgObj.id) {
+        var msgIdx = msgs.findIndex(msg => msg.id === msgObj.id)
+        msgs[msgIdx] = msgObj
+    } else {
+        msgObj.id = _findNextId(msgs)
+        msgs.push(msgObj)
     }
 }
 
 function saveDraft (msgObj) {
-    msgObj.id = _findNextId(drafts)
-    drafts.push(msgObj)
+    if (msgObj.id) {
+        var msgIdx = msgs.findIndex(msg => msg.id === msgObj.id)
+        msgs[msgIdx] = msgObj
+    } else {
+        msgObj.id = _findNextId(msgs)
+        msgObj.type = 'draft'
+        msgs.push(msgObj)
+    }
 }
 
-function getMsgById(msgId, msgs) {
+function getMsgById(msgId) {
     return new Promise((resolve, reject)=>{
         var foundMsg = msgs.find(msg => msg.id === msgId)
         if (foundMsg) resolve(foundMsg)
@@ -131,7 +139,7 @@ function getMsgById(msgId, msgs) {
     })
 }
 
-function deleteMsg(msgId, msgs) {
+function deleteMsg(msgId) {
     return new Promise((resolve, reject)=>{
         var msgIdx = msgs.findIndex(msg => msg.id === msgId)
         msgs.splice(msgIdx, 1);
@@ -140,24 +148,29 @@ function deleteMsg(msgId, msgs) {
 }
 
 function changeReadStatus(msgId, status) {
-    var msg = getMsgById(msgId,msgsToMe);
-    var msgIdx = msgsToMe.findIndex(msg => msg.id === msgId)
+    var msg = getMsgById(msgId);
+    var msgIdx = msgs.findIndex(msg => msg.id === msgId)
     // console.log(msgIdx)
-    // console.log(msgsToMe[msgIdx].isRead);
+    // console.log(inbox[msgIdx].isRead);
     // console.log(status)
-    msgsToMe[msgIdx].isRead = status
-    // console.log(msgsToMe[msgIdx].isRead);
+    msgs[msgIdx].isRead = status
+    // console.log(inbox[msgIdx].isRead);
+}
+
+function search(str){
+    var regex = new RegExp (str, 'i')
+    var res = msgs.filter(msg => (regex.test(msg.title) || regex.test(msg.text) || regex.test(msg.from) || regex.test(msg.to)))
+    console.log(res)
+    return res
 }
 
 export default {
     getMsgs,
     sendMsg,
     saveDraft,
-    msgsToMe,
-    drafts,
-    sentMsgs,
+    msgs,
     getMsgById,
     changeReadStatus,
     deleteMsg,
-    allMsgs
+    search
 }
