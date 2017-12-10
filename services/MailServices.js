@@ -106,19 +106,29 @@ function _findNextId() {
 }
 
 function sendMsg (msgObj) {
-    msgObj.id = _findNextId(msgs)
     msgObj.isSent = true;
     msgObj.sentOn = moment(Date.now()).fromNow();
     if (msgObj.to==='me') {
         msgObj.type = 'inbox'
     } else msgObj.type = 'sent'
-    msgs.push(msgObj)
+    if (msgObj.id) {
+        var msgIdx = msgs.findIndex(msg => msg.id === msgObj.id)
+        msgs[msgIdx] = msgObj
+    } else {
+        msgObj.id = _findNextId(msgs)
+        msgs.push(msgObj)
+    }
 }
 
 function saveDraft (msgObj) {
-    msgObj.id = _findNextId(msgs)
-    msgObj.type = 'draft'
-    msgs.push(msgObj)
+    if (msgObj.id) {
+        var msgIdx = msgs.findIndex(msg => msg.id === msgObj.id)
+        msgs[msgIdx] = msgObj
+    } else {
+        msgObj.id = _findNextId(msgs)
+        msgObj.type = 'draft'
+        msgs.push(msgObj)
+    }
 }
 
 function getMsgById(msgId) {
@@ -147,6 +157,13 @@ function changeReadStatus(msgId, status) {
     // console.log(inbox[msgIdx].isRead);
 }
 
+function search(str){
+    var regex = new RegExp (str, 'i')
+    var res = msgs.filter(msg => (regex.test(msg.title) || regex.test(msg.text) || regex.test(msg.from) || regex.test(msg.to)))
+    console.log(res)
+    return res
+}
+
 export default {
     getMsgs,
     sendMsg,
@@ -155,4 +172,5 @@ export default {
     getMsgById,
     changeReadStatus,
     deleteMsg,
+    search
 }

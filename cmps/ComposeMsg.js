@@ -26,11 +26,7 @@ export default {
     },
     methods: {
         sendMsg (){
-            this.$emit('msgSent')
-            MailServices.sendMsg(this.blankMsg)
-            if (this.blankMsg.to==='me') {
-                this.$router.push(`/mail/inbox/`)
-            } else this.$router.push(`/mail/sent/`)
+            this.$emit('sendMsg', this.blankMsg)
             this.blankMsg = {
                 id: undefined,
                 from: 'me',
@@ -43,7 +39,7 @@ export default {
             }
         },
         saveDraft (){
-            MailServices.saveDraft(this.blankMsg)
+            this.$emit('saveDraft', this.blankMsg)
             this.blankMsg = {
                 id: undefined,
                 from: 'me',

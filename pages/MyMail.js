@@ -1,6 +1,6 @@
 import MailServices from '../services/MailServices.js';
 
-import MsgBox from '../cmps/MsgBox.js';
+import MsgsBox from '../cmps/MsgsBox.js';
 import ComposeMsg from '../cmps/ComposeMsg.js';
 import ShowMsg from '../cmps/ShowMsg.js';
 
@@ -13,10 +13,27 @@ export default {
             <p @click="folderClicked('drafts')">Drafts</p>
         </aside>
         
-        <input type="text" v-model="searchTerm">
-        <msg-box :msgs="msgs" :show="show" @msgCliked="routeToMsg" @deleteMsg="deleteMsg"></msg-box>
-        <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg"></show-msg>
-        <compose-msg v-show="compose"></compose-msg>
+        <input type="text" v-model="searchTerm" @keyup="changeView">
+
+        <div class="radioDisplay" v-show="show==='inbox'">
+        <input v-model="display" type="radio" id="all"
+        name="display" value="all" checked>
+        <label for="all">All</label>
+        
+        <input type="radio" id="read"
+        name="display" value="read">
+        <label for="read">Read</label>
+        
+        <input type="radio" id="unread"
+        name="display" value="unread">
+        <label for="unread">Unread</label>
+        </div>
+        <msgs-box :msgs="msgs" :show="show" :searchTerm="searchTerm" @msgCliked="routeToMsg" @deleteMsg="deleteMsg" @markUnread="markUnread">
+        </msgs-box>
+        <show-msg :selectedMsg="selectedMsg" v-if="selectedMsg"
+        @deleteMsg="deleteMsg" @sendMsg="sendMsg" @saveDraft="saveDraft" @markUnread="markUnread">
+        </show-msg>
+        <compose-msg v-show="compose" @sendMsg="sendMsg" @saveDraft="saveDraft"></compose-msg>
         <button @click="compose=!compose" @msgSent="compose=false">🖉</button>
     </section>
     `,
@@ -25,8 +42,9 @@ export default {
             compose: false,
             msgs: [],
             show: 'inbox',
+            display: 'all',
             searchTerm: '',
-            selectedMsg: null
+            selectedMsg: null,
         }
     },
     created() {
@@ -47,27 +65,55 @@ export default {
             MailServices.getMsgById(id)
                 .then(msg => this.selectedMsg = msg)
                 .then (this.$router.push(`/mail/message/` + id))
+                .then (MailServices.changeReadStatus(id, true))
                 .catch(err => {
                     console.log('something happened')
                 })
-            MailServices.changeReadStatus(id, true)
+        },
+        sendMsg(msg){
+            MailServices.sendMsg(msg)
+            if (msg.to==='me') {
+                this.$router.push(`/mail/inbox/`)
+            } else this.$router.push(`/mail/sent/`)
+            this.compose = false
+            this.selectedMsg = null
+        },
+        saveDraft (msg){
+            MailServices.saveDraft(msg)
+            this.$router.push(`/mail/drafts/`)
+            this.compose = false
+            this.selectedMsg = null
         },
         deleteMsg(id) {
             MailServices.deleteMsg(id)
+            this.selectedMsg = null
         },
-        changeView(folder) {
-            this.show = folder
+        markUnread(id){
+            MailServices.changeReadStatus(id, false)
+            this.selectedMsg = null
+        },
+        changeView() {
+            if (this.searchTerm) {
+                this.msgs = MailServices.search(this.searchTerm)
+                this.show = 'search'
+            } else {
+                MailServices.getMsgs()
+                .then(res => {
+                    this.msgs = res
+                })
+                this.show = 'inbox'
+            }
         },
         folderClicked(folder) {
-            console.log(folder);
             this.$router.push(`/mail/` + folder)
-            this.changeView(folder)
-        }
+            this.show = folder
+        },
+
     },
     components: {
         ComposeMsg,
         ShowMsg,
         // ListMsgs,
-        MsgBox
+        MsgsBox
     }
 }
