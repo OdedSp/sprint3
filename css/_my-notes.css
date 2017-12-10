@@ -1,0 +1,15 @@
+.notes-panel{
+    display: flex;
+    justify-content: center;
+}
+
+.notes-panel *{
+    margin: 1vw;
+}
+
+@media (max-width: 640px) {
+.notes-panel *{
+    margin: .3vw;
+    font-size: .8em;
+    }
+}

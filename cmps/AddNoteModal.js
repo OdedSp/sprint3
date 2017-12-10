@@ -33,10 +33,10 @@ export default {
 
 
         
-        <footer class="modal-card-foot"> 
+        <div class="modal-card-foot"> 
         <button class="button is-success" form="add-note-form">Save your Note</button> 
             <button class="button delete" @click="close" >Cancel</button>  
-        </footer>
+        </div>
     
     </div>
     </section>

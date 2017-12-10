@@ -8,7 +8,7 @@ var notes = storageService.load(KEY_STORE) ||
     imgUrl: null,
     color: 'red',
     priority: 5,
-    date :new Date()
+    date :moment([2001, 8, 11]).fromNow(),
 }]
 
 
@@ -36,7 +36,7 @@ function delNote(noteId) {
 function addNote(newNote) {
     return   new Promise((resolve, reject) => {
             newNote.noteId = _getNextId()
-            newNote.date = new Date()
+            newNote.date = moment().startOf('min').fromNow();
             newNote.priority = +newNote.priority
             notes.push(newNote)
             storageService.store(KEY_STORE, notes)

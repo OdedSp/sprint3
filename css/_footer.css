@@ -1,11 +1,12 @@
 footer{
     background: rgb(167, 167, 167);
-    bottom: 0;
+    /* bottom: 0; */
     text-align: center;
-    position: fixed;
+    position: absolute;
     color: rgb(51, 51, 51);
     width: 100%;
-    margin-top: 1vw;
+    /* height: 12%; */
+    /* margin-top: 1vw; */
 }
 @media (max-width: 640px) {
     footer{

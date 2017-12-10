@@ -9,15 +9,16 @@ import ComposeMsg from '../cmps/ComposeMsg.js';
 
 export default {
     template:`
-    <section>
-        <aside>
-            Inbox
-            Sent Mail
-            Drafts
+    <section >
+        <aside class="panel-tabs">
+            <a class="is-active"> Inbox </a>
+            <a>  Sent Mail</a>
+            <a>Drafts </a>
         </aside>
-        
+        <aside class="panel-tabs">
+        <button @click="compose=!compose"  class="button is-link new-mail-btn"> COMPOSE NEW MAIL 🖉</button>
+        </aside>
         <my-inbox :msgs="msgs" @msgCliked="routeToMsg" v-show="show='inbox'"></my-inbox>
-        <button @click="compose=!compose">🖉</button>
     </section>
     `,
     data() {

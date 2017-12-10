@@ -1,7 +1,7 @@
 export default {
     template: ` <section>
     <div class="place-deatil card">
-        <div  :class="{editing: !isEdit}"  class="content">
+        <div  :class="{editing: !isEdit}">
             <h2><input type="text" :disabled="isEdit" v-model="currPlace.name"/></h2>
             <img :src="currPlace.imgUrl" class="image is-128x128">
                 <textarea :disabled="isEdit" v-model="currPlace.desc"></textarea>
