@@ -1,7 +1,7 @@
 export default {
     template: `
     <section class="note-card">
-    <div class="card" v-for="note in notesToRender">
+    <div class="card one-card" v-for="note in notesToRender">
         <header class="card-header" :class="'card-' + note.color">
             <p class="card-header-title">
                 {{note.title}}
@@ -13,7 +13,7 @@ export default {
             <p class="subtitle">
                 {{note.text}}
              </p>
-             <time> timestamp:{{note.date}}</time>
+             <time>created: about   {{note.date}}</time>
         </div>
         </div>
         <div class="card-footer">

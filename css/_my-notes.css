@@ -7,9 +7,32 @@
     margin: 1vw;
 }
 
+.note-card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: .1vw solid rgba(0, 0, 0, 0.336);
+    /* flex: 1; */
+}
+.one-card{
+    margin: 1vw;
+    max-width: 35%;
+    box-shadow: 5px 10px #888888;
+}
+
 @media (max-width: 640px) {
 .notes-panel *{
     margin: .3vw;
     font-size: .8em;
+    }
+    .note-card{
+        display: block
+    }
+    .one-card{
+        display: block;
+        margin: .3vw;
+        flex: 1;
+        min-width:100%;
+        box-shadow: 1px 1px #888888;
     }
 }

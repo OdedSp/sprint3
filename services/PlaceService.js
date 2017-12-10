@@ -58,8 +58,8 @@ function getPlaces() {
 
 function removePlace(placeId) {
     return new Promise((resolve, reject) => {
-        var placeId = places.findIndex(place => place.placeId === placeId)
-        places.splice(placeId, 1);
+        var placeIdx = places.findIndex(place => place.placeId === placeId)
+        places.splice(placeIdx, 1);
         storageService.store(KEY_STORE, places)
         resolve()
     });

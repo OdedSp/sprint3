@@ -54,8 +54,10 @@ function updateNote(noteUpdated) {
     notes.splice(idx,1,noteUpdated)
     storageService.store(KEY_STORE, notes)
 }
+var sortUp = false
 
 function sortByPriority() {
+    sortUp = !sortUp
     return new Promise((resolve, reject) => {
         notes.sort(function (a, b) {
             return a.priority - b.priority;
@@ -65,9 +67,11 @@ function sortByPriority() {
 }
 
 function sortByTime() {
+    sortUp = !sortUp
+    console.log(sortUp);
     return new Promise((resolve, reject) => {
         notes.sort(function (a, b) {
-            return  b.date - a.date;
+            return  a.date - b.date 
         });    
         resolve()
     });

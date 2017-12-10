@@ -40,7 +40,6 @@ export default {
         EventBusService.$on(MAP_CLICKED, cords=>{
             MapService.getGeoByCords(cords)
             .then(newPlace => {
-                console.log('1111', newPlace);
                 this.placeSearchedMap = Object.assign({}, newPlace)
         })
         })
@@ -63,7 +62,6 @@ export default {
                 console.log('newPosition',newPosition)
                 MapService.getGeoByCords(newPosition)
                     .then(newPlace => {
-                        console.log('1111', newPlace);
                         this.placeSearchedMap = Object.assign({}, newPlace)
                 })
             })       
