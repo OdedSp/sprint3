@@ -3,22 +3,24 @@ import MailServices from '../services/MailServices.js';
 export default {
     template:`
     <section>
+    <button class="button is-link close-btn" @click="closeMsg">X</button>
         <div class="editMsg" v-if="selectedMsg.type==='drafts'">
             <input type="text" placeholder="Recipient" v-model="selectedMsg.to" required>
             <input type="text" placeholder="Title" v-model="selectedMsg.title" required>
-            <input type="checkbox" id="important" v-model="selectedMsg.important"><label for="important">Important?</label>
+            <label for="important">Important? </label><input type="checkbox" id="important" v-model="selectedMsg.important">
             <textarea cols="30" rows="10" placeholder="Type your message" v-model="selectedMsg.text"></textarea>
-            <button @click="saveDraft">💾</button>
-            <button @click="sendMsg">🖅</button>
-            <button @click="deleteMsg">🗑</button>
+            <a @click="saveDraft" class="card-header-icon">💾</a>
+            <a @click="sendMsg" class="card-header-icon">🖅</a>
+            <a @click="deleteMsg" class="card-header-icon">🗑</a>
         </div>
         <div class="viewMsg" v-else>
             <h3>{{selectedMsg.title}}</h3>
-            <h6> {{selectedMsg.from}} </h6>
+            <h6>From: {{selectedMsg.from}} </h6>
+            <h6>To: {{selectedMsg.to}} </h6>
             <p>{{selectedMsg.receivedOn}} </p>
             <p>{{selectedMsg.text}} </p>
-            <button v-if="selectedMsg.type==='inbox'" @click="markUnread">🖂</button>
-            <button @click="deleteMsg">🗑</button>
+            <a v-if="selectedMsg.type==='inbox'" @click="markUnread" class="card-header-icon">🖂</a>
+            <a @click="deleteMsg" class="card-header-icon">🗑</a>
         </div>
     </section>
     `,
@@ -48,6 +50,9 @@ export default {
         },
         saveDraft (){
             this.$emit('saveDraft', this.selectedMsg)
+        },
+        closeMsg(){
+            this.$emit('closeMsg')
         }
     }
 }
